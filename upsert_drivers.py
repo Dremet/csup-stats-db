@@ -3,12 +3,16 @@ import numpy as np
 import math
 from pathlib import Path
 from connection import Cursor
+from helpers import read_sql_insert_template, ROOT_PATH
 
 
 with Cursor() as cur:
-    drivers = pd.read_csv("data/drivers.csv", na_filter=False)
+    path = ROOT_PATH / "drivers.csv"
+
+    # na_filter would transform "NA" (North America) to NaN, which we do not want
+    drivers = pd.read_csv(path, na_filter=False)
     
-    sql_upsert = Path("sql/inserts/60_upsert_drivers.sql").read_text().replace('\n', '')
+    sql_upsert = read_sql_insert_template("60_upsert_drivers.sql")
 
     drivers.loc[drivers["two_letter_country_code"]=="x", "two_letter_country_code"] = None
     
@@ -27,6 +31,6 @@ with Cursor() as cur:
         
         print("Upserting data from driver:", input_data[1])
         print(row)
-        input_data = [element if isinstance(element, str) or (not element is None and not math.isnan(element)) else None for element in input_data]
+        input_data = [element if isinstance(element, str) or (element is not None and not math.isnan(element)) else None for element in input_data]
 
         cur.execute(sql_upsert, dict(zip(drivers.columns, input_data)))
