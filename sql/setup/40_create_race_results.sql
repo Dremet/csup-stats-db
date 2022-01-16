@@ -7,5 +7,6 @@ create table base.race_results (
     rr_position smallint not null,
     rr_race_time_seconds float not null,
     rr_lappings int default 0,
-    rr_fastest_lap_seconds float not null
+    rr_fastest_lap_seconds float not null,
+    UNIQUE (r_r_id, d_d_id)
 );

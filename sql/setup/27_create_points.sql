@@ -4,5 +4,6 @@ create table base.event_points (
     p_id serial primary key,
     e_e_id int,
     d_d_id int,
-    p_amount int default 0
+    p_amount int default 0,
+    UNIQUE (e_e_id, d_d_id)
 );

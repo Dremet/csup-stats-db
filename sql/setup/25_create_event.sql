@@ -18,5 +18,6 @@ create table base.events (
     e_points_pos_11 smallint not null,
     e_points_pos_12 smallint not null,
     e_points_for_pole smallint not null,
-    e_points_for_fastest_lap smallint not null
+    e_points_for_fastest_lap smallint not null,
+    UNIQUE (s_s_id, e_datetime)
 );

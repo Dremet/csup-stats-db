@@ -5,5 +5,6 @@ create table base.lap_results (
     rr_rr_id int not null,
     lr_lap smallint not null,
     lr_position smallint,
-    lr_has_boxed boolean
+    lr_has_boxed boolean,
+    UNIQUE (rr_rr_id, lr_lap)
 );
