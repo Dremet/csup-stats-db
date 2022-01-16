@@ -1,7 +1,5 @@
 import pandas as pd
-import numpy as np
 import math
-from pathlib import Path
 from connection import Cursor
 from helpers import read_sql_insert_template, ROOT_PATH
 
