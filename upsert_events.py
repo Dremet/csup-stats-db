@@ -21,6 +21,7 @@ assert season_path.is_dir(), f"This folder does not exist: {season_path}"
 
 # now check if events.csv file exists
 events_file_path = season_path / Path("events.csv")
+assert events_file_path.is_file(), f"events file not found: {events_file_path}"
 
 events = pd.read_csv(events_file_path)
 events["date"] = events["date"].astype(str).apply(lambda x: pd.Timestamp(x))
