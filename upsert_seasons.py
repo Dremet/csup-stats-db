@@ -1,5 +1,4 @@
 import argparse
-from operator import le
 import pandas as pd
 from pathlib import Path
 from connection import Cursor, Connection
