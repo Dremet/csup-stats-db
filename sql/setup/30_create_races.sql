@@ -3,6 +3,7 @@ drop table if exists base.races;
 create table base.races (
     r_id serial primary key,
     e_e_id int,
+    r_order smallint default 1,
     r_track varchar not null,
     r_version varchar not null,
     r_reversed boolean default FALSE,
@@ -16,5 +17,6 @@ create table base.races (
     r_drafting smallint,
     r_is_ghost_race boolean default FALSE,
     r_has_reversed_grid boolean default FALSE,
-    r_details_were_announced boolean default FALSE
+    r_details_were_announced boolean default FALSE,
+    UNIQUE (e_e_id, r_order)
 );

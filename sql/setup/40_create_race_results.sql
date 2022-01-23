@@ -4,9 +4,9 @@ create table base.race_results (
     rr_id serial primary key,
     r_r_id int not null,
     d_d_id int not null,
-    rr_position smallint not null,
-    rr_race_time_seconds float not null,
+    rr_position smallint,
+    rr_race_time_seconds float,
     rr_lappings int default 0,
-    rr_fastest_lap_seconds float not null,
+    rr_fastest_lap_seconds float,
     UNIQUE (r_r_id, d_d_id)
 );
