@@ -24,7 +24,7 @@ with Cursor() as cur:
         inplace=True
     )
 
-    drivers["driver"] = drivers["driver"].str.strip()
+    drivers["d_name"] = drivers["d_name"].str.strip()
     
     for _, row in drivers.iterrows():
         input_data = list(row)
