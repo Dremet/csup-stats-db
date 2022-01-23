@@ -106,6 +106,19 @@ with Connection() as conn:
         )
 
         ###
+        # Add Quali Position, if not in the data
+        # In the beginning, this column was not included, but it is needed, if two people have the exact same time
+        # or someone attended the Quali, but did not finish a lap
+        if not "quali_position" in results.columns:
+            results["quali_position"] = results["quali_lap_time_seconds"].rank(method="min")
+
+            # Check if, 
+            assert results["quali_position"].loc[~results["quali_position"].isnull()].rank(method="min").duplicated().sum() == 0, \
+                "This file needs the quali position column as two drivers seem to have driven the same time."
+
+            results["quali_position"] = results["quali_position"].replace({np.nan: None})
+
+
         # Now, we need split the data into quali and race
 
         results_quali = results[["r_r_id", "d_d_id", "quali_lap_time_seconds", "quali_position"]].copy()
