@@ -49,6 +49,11 @@ with Connection() as conn:
     for race_file in race_files_to_process:
         race = pd.read_csv(race_file)
 
+        if race_file.parent.name.startswith("Race"):
+            race["order"] = race_file.parent.name[4:]
+        else:
+            race["order"] = 1
+
         # correct typo
         race.rename(columns={
             "detailes_were_announced" : "details_were_announced"
