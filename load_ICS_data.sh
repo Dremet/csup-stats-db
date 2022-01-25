@@ -19,42 +19,94 @@ python3 upsert_seasons.py -c ICSTC -l "Semi Pros"
 python3 upsert_seasons.py -c ICSTC -l Amateur
 
 # load data specific to championship, league and season
-python3 upsert_teams_and_mappings.py -c ICSTC -l Superstars -s 2
-python3 upsert_teams_and_mappings.py -c ICSTC -l Experts -s 2
-python3 upsert_teams_and_mappings.py -c ICSTC -l Pros -s 2
-python3 upsert_teams_and_mappings.py -c ICSTC -l "Semi Pros" -s 2
-python3 upsert_teams_and_mappings.py -c ICSTC -l Amateur -s 2
+for season in 1 2
+do
+    echo "Teams and Mappings for season $season"
 
-python3 upsert_events.py -c ICSTC -l Superstars -s 2
-python3 upsert_events.py -c ICSTC -l Experts -s 2
-python3 upsert_events.py -c ICSTC -l Pros -s 2
-python3 upsert_events.py -c ICSTC -l "Semi Pros" -s 2
-python3 upsert_events.py -c ICSTC -l Amateur -s 2
+    echo "Superstars"
+    python3 upsert_teams_and_mappings.py -c ICSTC -l Superstars -s $season
+    echo "Experts"
+    python3 upsert_teams_and_mappings.py -c ICSTC -l Experts -s $season
+    echo "Pros"
+    python3 upsert_teams_and_mappings.py -c ICSTC -l Pros -s $season
+    echo "Semi Pros"
+    python3 upsert_teams_and_mappings.py -c ICSTC -l "Semi Pros" -s $season
+    if [ $season -gt 1 ]
+    then
+        echo "Amateur"
+        python3 upsert_teams_and_mappings.py -c ICSTC -l Amateur -s $season
+    fi
+
+    echo "Events for season $season"
+    echo "Superstars"
+    python3 upsert_events.py -c ICSTC -l Superstars -s $season
+    echo "Experts"
+    python3 upsert_events.py -c ICSTC -l Experts -s $season
+    echo "Pros"
+    python3 upsert_events.py -c ICSTC -l Pros -s $season
+    echo "Semi Pros"
+    python3 upsert_events.py -c ICSTC -l "Semi Pros" -s $season
+    if [ $season -gt 1 ]
+    then
+        echo "Amateur"
+        python3 upsert_events.py -c ICSTC -l Amateur -s $season
+    fi
+done
 
 # now event specific
 
 # races
-python3 upsert_races.py -c ICSTC -l Superstars -s 2 -e 20220109
-python3 upsert_races.py -c ICSTC -l Experts -s 2 -e 20220109
-python3 upsert_races.py -c ICSTC -l Pros -s 2 -e 20220109
-python3 upsert_races.py -c ICSTC -l "Semi Pros" -s 2 -e 20220109
-python3 upsert_races.py -c ICSTC -l Amateur -s 2 -e 20220109
+for season in 1 2
+do
+    if [ $season -eq 1 ]
+    then
+        event_dates="20210926 20211003 20211010 20211017 20211024 20211031"
+    elif [ $season -eq 2 ]
+    then
+        event_dates="20220109 20220116 20220123"
+    fi
 
-python3 upsert_races.py -c ICSTC -l Superstars -s 2 -e 20220116
-python3 upsert_races.py -c ICSTC -l Experts -s 2 -e 20220116
-python3 upsert_races.py -c ICSTC -l Pros -s 2 -e 20220116
-python3 upsert_races.py -c ICSTC -l "Semi Pros" -s 2 -e 20220116
-python3 upsert_races.py -c ICSTC -l Amateur -s 2 -e 20220116
+    for event_date in $event_dates
+    do
+        echo "Races for season $season and event $event_date"
 
-# results
-python3 upsert_results.py -c ICSTC -l Superstars -s 2 -e 20220109
-python3 upsert_results.py -c ICSTC -l Experts -s 2 -e 20220109
-python3 upsert_results.py -c ICSTC -l Pros -s 2 -e 20220109
-python3 upsert_results.py -c ICSTC -l "Semi Pros" -s 2 -e 20220109
-python3 upsert_results.py -c ICSTC -l Amateur -s 2 -e 20220109
+        echo "Superstars"
+        python3 upsert_races.py -c ICSTC -l Superstars -s $season -e $event_date
+        echo "Experts"
+        python3 upsert_races.py -c ICSTC -l Experts -s $season -e $event_date
+        echo "Pros"
+        python3 upsert_races.py -c ICSTC -l Pros -s $season -e $event_date
 
-python3 upsert_results.py -c ICSTC -l Superstars -s 2 -e 20220116
-python3 upsert_results.py -c ICSTC -l Experts -s 2 -e 20220116
-python3 upsert_results.py -c ICSTC -l Pros -s 2 -e 20220116
-python3 upsert_results.py -c ICSTC -l "Semi Pros" -s 2 -e 20220116
-python3 upsert_results.py -c ICSTC -l Amateur -s 2 -e 20220116
+        if [ $event_date -ne 20210926 ]
+        then
+            echo "Semi Pros"
+            python3 upsert_races.py -c ICSTC -l "Semi Pros" -s $season -e $event_date
+        fi
+
+        if [ $season -gt 1 ]
+        then
+            echo "Amateur"
+            python3 upsert_races.py -c ICSTC -l Amateur -s $season -e $event_date
+        fi
+
+        echo "Results for season $season and event $event_date"
+        echo "Superstars"
+        python3 upsert_results.py -c ICSTC -l Superstars -s $season -e $event_date
+        echo "Experts"
+        python3 upsert_results.py -c ICSTC -l Experts -s $season -e $event_date
+        echo "Pros"
+        python3 upsert_results.py -c ICSTC -l Pros -s $season -e $event_date
+        
+        if [ $event_date -ne 20210926 ]
+        then
+            echo "Semi Pros"
+            python3 upsert_results.py -c ICSTC -l "Semi Pros" -s $season -e $event_date
+        fi
+
+        if [ $season -gt 1 ]
+        then
+            echo "Amateur"
+            python3 upsert_results.py -c ICSTC -l Amateur -s $season -e $event_date
+        fi
+    done
+done
