@@ -112,7 +112,7 @@ with Connection() as conn:
         if not "quali_position" in results.columns:
             results["quali_position"] = results["quali_lap_time_seconds"].rank(method="min")
 
-            # Check if, 
+            # Check if, any times occur twice
             assert results["quali_position"].loc[~results["quali_position"].isnull()].rank(method="min").duplicated().sum() == 0, \
                 "This file needs the quali position column as two drivers seem to have driven the same time."
 

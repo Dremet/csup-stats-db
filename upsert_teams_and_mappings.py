@@ -29,7 +29,6 @@ team_mapping = pd.read_csv(team_mapping_file_path)
 
 team_mapping["driver"] = team_mapping["driver"].str.strip()
 team_mapping["team"] = team_mapping["team"].str.strip()
-print(team_mapping)
 
 with Connection() as conn:    
     # get season id 
@@ -40,13 +39,9 @@ with Connection() as conn:
         f"where s.s_desc = '{season}' and s.l_l_id = l.l_id and l.c_c_id = c.c_id", 
     con=conn)
 
-    print("season", season)
-
     assert len(season) == 1, "Found no or more that one s_id, exciting.."
 
     sid = season["s_id"].values[0]
-
-    print(sid)
 
     team_mapping["s_s_id"] = sid
 
@@ -71,8 +66,6 @@ with Connection() as conn:
         }, 
         inplace=True
     )
-
-    print(team_mapping)
 
     sql = read_sql_insert_template("80_insert_team_mappings.sql")
 

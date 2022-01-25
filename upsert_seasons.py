@@ -51,8 +51,6 @@ with Connection() as conn:
             season_desc = season_path.name[6:]
             assert len(season_desc) > 0, "Season description needs to consist of at least one character!"
 
-            print(f"Inserting data from season {season_desc}")
-
             l_l_id = int(df.loc[(df.c_name == championship) & (df.l_name == league), "l_id"].values[0])
             
             conn.cursor().execute(sql, {"l_l_id": l_l_id, "s_desc": season_desc})
@@ -60,8 +58,6 @@ with Connection() as conn:
         # only insert that one season
         assert not season.startswith("Season"), "Only provide the name after the word 'Season'"
         assert len(season) > 0, "Season description needs to consist of at least one character!"
-
-        print(f"Inserting data from season {season}")
 
         l_l_id = int(df.loc[(df.c_name == championship) & (df.l_name == league), "l_id"].values[0])
         

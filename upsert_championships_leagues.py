@@ -33,7 +33,7 @@ with Cursor() as cur:
 
     for _, row in cs.iterrows():
         input_data = list(row)
-        print(f"Upserting data from championship {input_data[0]}")
+        
         cur.execute(sql_upsert_cs, dict(zip(cs.columns, input_data)))
 
         c_id, c_name = cur.fetchone()
@@ -56,5 +56,5 @@ with Cursor() as cur:
 
     for _, row in leagues.iterrows():
         input_data = list(row)
-        print(f"Upserting data from league {input_data[0]}")
+        
         cur.execute(sql_upsert_league, dict(zip(leagues.columns, input_data)))
