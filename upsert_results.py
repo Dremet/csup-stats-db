@@ -118,6 +118,12 @@ with Connection() as conn:
 
             results["quali_position"] = results["quali_position"].replace({np.nan: None})
 
+        # add penalty and penalty_description column, if not given
+        if not "penalty" in results.columns:
+            results["penalty"] = None
+        if not "penalty_description" in results.columns:
+            results["penalty_description"] = None
+
 
         # Now, we need split the data into quali and race
 
