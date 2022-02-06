@@ -10,3 +10,7 @@ create table base.race_results (
     rr_fastest_lap_seconds float,
     UNIQUE (r_r_id, d_d_id)
 );
+
+alter table base.race_results
+add column rr_got_penalty boolean,
+add column rr_penalty_description text;

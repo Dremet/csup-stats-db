@@ -122,7 +122,7 @@ with Connection() as conn:
         # Now, we need split the data into quali and race
 
         results_quali = results[["r_r_id", "d_d_id", "quali_lap_time_seconds", "quali_position"]].copy()
-        results_race = results[["r_r_id", "d_d_id", "race_time_seconds", "position", "lappings", "fastest_lap_seconds"]].copy()
+        results_race = results[["r_r_id", "d_d_id", "race_time_seconds", "position", "lappings", "fastest_lap_seconds", "penalty", "penalty_description"]].copy()
 
         results_quali.rename(columns={
             "quali_position" : "position"
@@ -136,7 +136,7 @@ with Connection() as conn:
             print(row)
 
             list_insert = list(row)
-
+            
             conn.cursor().execute(sql_quali, dict(zip(results_quali.columns, list_insert)))
         
         
