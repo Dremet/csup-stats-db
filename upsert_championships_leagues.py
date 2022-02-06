@@ -10,7 +10,7 @@ with Cursor() as cur:
     cs_leagues = pd.read_csv(path, na_filter=False)
 
     ### CHAMPIONSHIPS ###
-    cs = cs_leagues[["name","has_teams","region"]]
+    cs = cs_leagues[["name","has_teams","region","description"]]
 
     # as we have no na filter, we have to do this for the row that allows None values
     cs.loc[cs["region"] == "", "region"] = None
@@ -21,7 +21,8 @@ with Cursor() as cur:
     cs.rename(columns={
             "name" : "c_name",
             "has_teams" : "c_has_teams",
-            "region" : "c_region"
+            "region" : "c_region",
+            "description" : "c_description"
         }, 
         inplace=True
     )

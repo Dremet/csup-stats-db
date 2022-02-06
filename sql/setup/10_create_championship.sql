@@ -6,3 +6,6 @@ create table base.championships (
     c_has_teams boolean not null,
     c_region varchar default 'World'
 );
+
+alter table base.championships
+add column c_description text;
