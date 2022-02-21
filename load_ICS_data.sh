@@ -19,7 +19,7 @@ python3 upsert_seasons.py -c ICSTC -l "Semi Pros"
 python3 upsert_seasons.py -c ICSTC -l Amateur
 
 # load data specific to championship, league and season
-for season in 2 3
+for season in 3
 do
     echo "Teams and Mappings for season $season"
 
@@ -56,14 +56,15 @@ done
 # now event specific
 
 # races
-for season in 2 3
+for season in 3
 do
     if [ $season -eq 2 ]
     then
         event_dates="20210926 20211003 20211010 20211017 20211024 20211031"
     elif [ $season -eq 3 ]
     then
-        event_dates="20220109 20220116 20220123 20220130"
+        #event_dates="20220109 20220116 20220123 20220130"
+        event_dates="20220213"
     fi
 
     for event_date in $event_dates

@@ -39,7 +39,7 @@ do
     if [ $season -eq 1 ]
     then
         event_dates_groups="20220109 20220116 20220123"
-        event_dates_finals="20220130"
+        event_dates_finals="20220213"
     fi
 
     for event_date in $event_dates_groups
