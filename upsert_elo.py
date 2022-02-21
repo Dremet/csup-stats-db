@@ -32,7 +32,7 @@ with Connection() as conn:
     elo["elo_date"] = date
     elo["elo_date"] = elo["elo_date"].astype(str).apply(lambda x: pd.Timestamp(x))
     elo["driver"] = elo["driver"].str.strip()
-
+    elo["elo_ranking"] = elo["elo_ranking"].str.replace(",", ".").astype(float)
 
     ###
     # Now, we need the d_d_id
