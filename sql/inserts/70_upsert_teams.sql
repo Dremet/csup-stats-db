@@ -9,7 +9,7 @@ insert into base.teams (
 values
 (%(id)s, %(name)s, %(tag)s, %(primary_color)s, %(secondary_color)s, %(tertiary_color)s)
 
-on conflict (t_name)
+on conflict (t_id)
 do 
 update set
     t_name = EXCLUDED.t_name,
